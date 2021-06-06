@@ -172,7 +172,7 @@ func New(wikiURL, userAgent string) (*MWApi, error) {
 		url:       clientURL,
 		client:    &client,
 		format:    "json",
-		userAgent: "mediawiki (Golang) https://github.com/sadbox/mediawiki " + userAgent,
+		userAgent: "mediawiki (Golang) https://github.com/ima666/mediawiki " + userAgent,
 	}, nil
 }
 
@@ -262,7 +262,7 @@ func (m *MWApi) Download(filename string) (io.ReadCloser, error) {
 // versions of the API.
 //
 // Automatically retrieves an edit token if necessary.
-func (m *MWApi) Upload(dstFilename string, file io.Reader) error {
+func (m *MWApi) Upload(dstFilename string, file io.Reader, ignorewarnings bool) error {
 	if m.edittoken == "" {
 		err := m.GetEditToken()
 		if err != nil {
@@ -275,6 +275,10 @@ func (m *MWApi) Upload(dstFilename string, file io.Reader) error {
 		"filename": dstFilename,
 		"token":    m.edittoken,
 		"format":   m.format,
+	}
+
+	if ignorewarnings {
+		query["ignorewarnings"] = "1"
 	}
 
 	buffer := &bytes.Buffer{}

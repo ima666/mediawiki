@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/sadbox/mediawiki"
+	"github.com/ima666/mediawiki"
 	"io"
 	"io/ioutil"
 	"log"
@@ -60,7 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = client.Upload("SomeFile.pdf", file)
+	err = client.Upload("SomeFile.pdf", file, false)
 	if err != nil {
 		log.Fatal(err)
 	}
